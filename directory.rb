@@ -34,7 +34,9 @@ end
 
 def print(names)
   names.each.with_index(1) do |name, index|
-    puts "#{index}. #{name[:name]} (#{name[:cohort].capitalize} cohort)"
+    if name[:name].length > 12
+      puts "#{index}. #{name[:name]} (#{name[:cohort].capitalize} cohort)"
+    end
   end
 end
 
@@ -44,8 +46,8 @@ def print_footer(names)
 end
 
 puts
-students = input_students
+# students = input_students
 print_header
-print(students)
-print_footer(students)
+print(students_old)
+print_footer(students_old)
 puts
