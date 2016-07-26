@@ -12,4 +12,4 @@ ruby directory.rb
 
 ```
 
-If you have any questions or thoughts, feel free to contact me [@mfperkins](@mfperkins).
+If you have any questions or thoughts, feel free to contact me [@mfperkins](https://github.com/mfperkins).
