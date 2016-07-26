@@ -27,6 +27,19 @@ def input_students
   students
 end
 
+def print_if_letter(names)
+  puts "This option allows you to print students whose name begins with a specific letter"
+  puts "What letter would you like to select?"
+  answer = gets.chomp.upcase
+  puts "Ok, this is what I've got ..."
+  names.each.with_index(1) do |name, index|
+    if name[:name][0] == answer
+      puts "#{index}. #{name[:name]} (#{name[:cohort].capitalize} cohort)"
+    end
+  end
+
+end
+
 def print_header
   puts "The Students of Awesomeness Academy"
   puts "-----------------"
@@ -48,6 +61,6 @@ end
 puts
 # students = input_students
 print_header
-print(students_old)
+print_if_letter(students_old)
 print_footer(students_old)
 puts
