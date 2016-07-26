@@ -37,7 +37,15 @@ def print_if_letter(names)
       puts "#{index}. #{name[:name]} (#{name[:cohort].capitalize} cohort)"
     end
   end
+end
 
+
+def print_while(names)
+  count = 0
+  while count != names.count
+    puts "#{names[count][:name]} (#{names[count][:cohort].capitalize} cohort)"
+    count += 1
+  end
 end
 
 def print_header
@@ -53,6 +61,7 @@ def print(names)
   end
 end
 
+
 def print_footer(names)
   puts
   puts "Overall, we have #{names.count} great students."
@@ -61,6 +70,6 @@ end
 puts
 # students = input_students
 print_header
-print_if_letter(students_old)
+print_while(students_old)
 print_footer(students_old)
 puts
