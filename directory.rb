@@ -1,15 +1,15 @@
 students_old = [
-  {name: "Dr. Hannibal Lecter", cohort: :november},
-  {name: "Darth Vader", cohort: :november},
-  {name: "Nurse Ratched", cohort: :november},
-  {name: "Michael Corleone", cohort: :november},
-  {name: "Alex DeLarge", cohort: :november},
-  {name: "The Wicked Witch of the West", cohort: :november},
-  {name: "Terminator", cohort: :november},
-  {name: "Freddy Krueger", cohort: :november},
-  {name: "The Joker", cohort: :november},
-  {name: "Joffrey Baratheon", cohort: :november},
-  {name: "Norman Bates", cohort: :november}
+  {name: "Dr. Hannibal Lecter", cohort: :november, country: :USA, hobby: "Eating", height: 180, weight: 90},
+  {name: "Darth Vader", cohort: :november, country: :Empire, hobby: "Light Sabering", height: 190, weight: 92},
+  {name: "Nurse Ratched", cohort: :november, country: :USA, hobby: "Nursing", height: 157, weight: 56},
+  {name: "Michael Corleone", cohort: :november, country: :NYC, hobby: "Pizza making", height: 190, weight: 120},
+  {name: "Alex DeLarge", cohort: :november, country: :USA, hobby: "Cards", height: 182, weight: 87},
+  {name: "The Wicked Witch of the West", cohort: :november, country: :Oz, hobby: "Cackling", height: 165, weight: 64},
+  {name: "Terminator", cohort: :november, country: :Skynet, hobby: "I'll be back", height: 201, weight: 110},
+  {name: "Freddy Krueger", cohort: :november, country: :USA, hobby: "Slashing", height: 193, weight: 96},
+  {name: "The Joker", cohort: :november, country: :Gotham, hobby: "Destroying", height: 178, weight: 76},
+  {name: "Joffrey Baratheon", cohort: :november, country: :Westeros, hobby: "Screeching", height: 136, weight: 52},
+  {name: "Norman Bates", cohort: :november, country: :England, hobby: "Chess", height: 156, weight: 60}
 ]
 
 def input_students
@@ -17,12 +17,23 @@ def input_students
   puts "To finish, just hit return twice."
 
   students = []
-  name = gets.chomp
+  name = gets.chomp.capitalize
 
   while !name.empty? do
-    students.push({name: name, cohort: :november})
+    puts "What country is #{name} from?"
+    country = gets.chomp.capitalize
+    puts "What is #{name}'s favourite hobby?"
+    hobby = gets.chomp
+    puts "What tall is #{name} in cm?"
+    height = gets.chomp
+    puts "And finally, how much does #{name} weigh in kgs?"
+    weight = gets.chomp
+    students.push({name: name, cohort: :november, country: country, hobby: hobby, height: height, weight: weight})
+
     puts "Now we have #{students.count} students."
-    name = gets.chomp
+    puts "Enter another student's name or hit ENTER to finish"
+    name = gets.chomp.capitalize
+
   end
   students
 end
@@ -55,8 +66,14 @@ end
 
 def print(names)
   names.each.with_index(1) do |name, index|
+    puts "#{index}. #{name[:name]} (#{name[:cohort].capitalize} cohort) // Height: #{name[:height]}cm, Weight: #{name[:weight]}kgs // Born: #{name[:country]} // Hobby: #{name[:hobby]}"
+  end
+end
+
+def print_length(names)
+  names.each.with_index(1) do |name, index|
     if name[:name].length > 12
-      puts "#{index}. #{name[:name]} (#{name[:cohort].capitalize} cohort)"
+      puts "#{index}. #{name[:name]} (#{name[:cohort].capitalize} cohort ) (Height: #{name[:name]} ) (Weight: #{name[:weight]} )(Born: #{name[:country]} ) (Hobby: #{name[:hobby]})"
     end
   end
 end
@@ -68,8 +85,8 @@ def print_footer(names)
 end
 
 puts
-# students = input_students
+students = input_students
 print_header
-print_while(students_old)
-print_footer(students_old)
+print(students)
+print_footer(students)
 puts
