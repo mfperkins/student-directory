@@ -33,8 +33,8 @@ def print_header
 end
 
 def print(names)
-  names.each do |name|
-    puts "#{name[:name]} (#{name[:cohort].capitalize} cohort)"
+  names.each.with_index(1) do |name, index|
+    puts "#{index}. #{name[:name]} (#{name[:cohort].capitalize} cohort)"
   end
 end
 
