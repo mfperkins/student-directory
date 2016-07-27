@@ -50,23 +50,11 @@ def print_if_letter(names)
   end
 end
 
-
 def print_while(names)
   count = 0
   while count != names.count
     puts "#{names[count][:name]} (#{names[count][:cohort].capitalize} cohort)"
     count += 1
-  end
-end
-
-def print_header
-  puts "The Students of Awesomeness Academy"
-  puts "-----------------"
-end
-
-def print(names)
-  names.each.with_index(1) do |name, index|
-    puts "#{index}. #{name[:name]} (#{name[:cohort].capitalize} cohort) // Height: #{name[:height]}cm, Weight: #{name[:weight]}kgs // Born: #{name[:country]} // Hobby: #{name[:hobby]}"
   end
 end
 
@@ -78,6 +66,56 @@ def print_length(names)
   end
 end
 
+def find_lengths names
+  $longest_string = 1
+  $length_1st_section = 1
+  $length_2nd_section = 1
+  $length_3rd_section = 1
+
+  names.each do |name|
+
+    section_1 = "#{name[:name]} (#{name[:cohort].capitalize} cohort)"
+    section_2 = "Height: #{name[:height]}cm, Weight: #{name[:weight]}kgs"
+    section_3 = "Born: #{name[:country]} // Hobby: #{name[:hobby]}"
+
+    if name.to_s.length.to_i > $longest_string
+      $longest_string = name.to_s.length.to_i
+    end
+
+    if section_1.length > $length_1st_section
+      $length_1st_section = section_1.length
+    end
+
+    if section_2.length > $length_2nd_section
+      $length_2nd_section = section_2.length
+    end
+
+    if section_3.length > $length_3rd_section
+      $length_3rd_section = section_3.length
+    end
+
+  end
+
+end
+
+
+def prints(names)
+
+  find_lengths(names)
+
+  puts "The Students of Awesomeness Academy"
+  puts "-" * ($longest_string.to_i+13)
+
+  names.each.with_index(1) do |name, index|
+
+    section_1 = "#{name[:name]} (#{name[:cohort].capitalize} cohort)"
+    section_2 = "Height: #{name[:height]}cm, Weight: #{name[:weight]}kgs"
+    section_3 = "Born: #{name[:country]} // Hobby: #{name[:hobby]}"
+
+    puts "#{index}.".center(3) + " " + section_1.center($length_1st_section.to_i) + " // " + section_2.center($length_3rd_section.to_i) + " // " + section_3.center($length_3rd_section.to_i)
+  end
+
+end
 
 def print_footer(names)
   puts
@@ -85,8 +123,7 @@ def print_footer(names)
 end
 
 puts
-students = input_students
-print_header
-print(students)
-print_footer(students)
+# students = input_students
+prints(students_old)
+print_footer(students_old)
 puts
