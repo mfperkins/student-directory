@@ -20,21 +20,33 @@ def input_students
   name = gets.chomp.capitalize
 
   while !name.empty? do
+
+    puts "What cohort is #{name} in?"
+    cohort = gets.chomp.to_sym
+    if cohort.empty? == true
+      cohort = :november
+    end
+
     puts "What country is #{name} from?"
     country = gets.chomp.capitalize
+
     puts "What is #{name}'s favourite hobby?"
     hobby = gets.chomp
+
     puts "What tall is #{name} in cm?"
     height = gets.chomp
+
     puts "And finally, how much does #{name} weigh in kgs?"
     weight = gets.chomp
-    students.push({name: name, cohort: :november, country: country, hobby: hobby, height: height, weight: weight})
+
+    students.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
 
     puts "Now we have #{students.count} students."
     puts "Enter another student's name or hit ENTER to finish"
     name = gets.chomp.capitalize
 
   end
+  puts students
   students
 end
 
@@ -123,7 +135,7 @@ def print_footer(names)
 end
 
 puts
-# students = input_students
-prints(students_old)
-print_footer(students_old)
+students = input_students
+prints(students)
+print_footer(students)
 puts
