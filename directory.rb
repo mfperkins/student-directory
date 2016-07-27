@@ -14,7 +14,6 @@ students_old = [
 
 def input_students
   puts "Please enter names of the students."
-  puts "To finish, just hit return twice."
 
   students = []
   name = gets.chomp.capitalize
@@ -22,7 +21,7 @@ def input_students
   while !name.empty? do
 
     puts "What cohort is #{name} in?"
-    cohort = gets.chomp.to_sym
+    cohort = gets.chomp.capitalize.to_sym
     if cohort.empty? == true
       cohort = :november
     end
@@ -41,7 +40,11 @@ def input_students
 
     students.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
 
-    puts "Now we have #{students.count} students."
+    if students.count > 1
+      puts "Now we have #{students.count} students."
+    else
+      puts "Now we have #{students.count} student."
+    end
     puts "Enter another student's name or hit ENTER to finish"
     name = gets.chomp.capitalize
 
@@ -130,8 +133,13 @@ def prints(names)
 end
 
 def print_footer(names)
-  puts
-  puts "Overall, we have #{names.count} great students."
+  if names.count > 1
+    puts
+    puts "Overall, we have #{names.count} great students."
+  else
+    puts
+    puts "Overall, we have #{names.count} great student."
+  end
 end
 
 puts
