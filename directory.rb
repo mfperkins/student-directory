@@ -1,15 +1,15 @@
 students_old = [
   {name: "Dr. Hannibal Lecter", cohort: :november, country: :USA, hobby: "Eating", height: 180, weight: 90},
-  {name: "Darth Vader", cohort: :november, country: :Empire, hobby: "Light Sabering", height: 190, weight: 92},
-  {name: "Nurse Ratched", cohort: :november, country: :USA, hobby: "Nursing", height: 157, weight: 56},
+  {name: "Darth Vader", cohort: :august, country: :Empire, hobby: "Light Sabering", height: 190, weight: 92},
+  {name: "Nurse Ratched", cohort: :january, country: :USA, hobby: "Nursing", height: 157, weight: 56},
   {name: "Michael Corleone", cohort: :november, country: :NYC, hobby: "Pizza making", height: 190, weight: 120},
   {name: "Alex DeLarge", cohort: :november, country: :USA, hobby: "Cards", height: 182, weight: 87},
-  {name: "The Wicked Witch of the West", cohort: :november, country: :Oz, hobby: "Cackling", height: 165, weight: 64},
+  {name: "The Wicked Witch of the West", cohort: :january, country: :Oz, hobby: "Cackling", height: 165, weight: 64},
   {name: "Terminator", cohort: :november, country: :Skynet, hobby: "I'll be back", height: 201, weight: 110},
-  {name: "Freddy Krueger", cohort: :november, country: :USA, hobby: "Slashing", height: 193, weight: 96},
+  {name: "Freddy Krueger", cohort: :september, country: :USA, hobby: "Slashing", height: 193, weight: 96},
   {name: "The Joker", cohort: :november, country: :Gotham, hobby: "Destroying", height: 178, weight: 76},
-  {name: "Joffrey Baratheon", cohort: :november, country: :Westeros, hobby: "Screeching", height: 136, weight: 52},
-  {name: "Norman Bates", cohort: :november, country: :England, hobby: "Chess", height: 156, weight: 60}
+  {name: "Joffrey Baratheon", cohort: :september, country: :Westeros, hobby: "Screeching", height: 136, weight: 52},
+  {name: "Norman Bates", cohort: :august, country: :England, hobby: "Chess", height: 156, weight: 60}
 ]
 
 def input_students
@@ -121,14 +121,22 @@ def prints(names)
   puts "The Students of Awesomeness Academy"
   puts "-" * ($longest_string.to_i+13)
 
+  cohort = names.map { |x| x[:cohort] }
+  puts cohort.uniq
+
   names.each.with_index(1) do |name, index|
+    cohort.each do |month|
+      month_to_check = month
+      if month_to_check == name[:cohort]
+        section_1 = "#{name[:name]} (#{name[:cohort].capitalize} cohort)"
+        section_2 = "Height: #{name[:height]}cm, Weight: #{name[:weight]}kgs"
+        section_3 = "Born: #{name[:country]} // Hobby: #{name[:hobby]}"
 
-    section_1 = "#{name[:name]} (#{name[:cohort].capitalize} cohort)"
-    section_2 = "Height: #{name[:height]}cm, Weight: #{name[:weight]}kgs"
-    section_3 = "Born: #{name[:country]} // Hobby: #{name[:hobby]}"
-
-    puts "#{index}.".center(3) + " " + section_1.center($length_1st_section.to_i) + " // " + section_2.center($length_3rd_section.to_i) + " // " + section_3.center($length_3rd_section.to_i)
+        puts "#{index}.".center(3) + " " + section_1.center($length_1st_section.to_i) + " // " + section_2.center($length_3rd_section.to_i) + " // " + section_3.center($length_3rd_section.to_i)
+      end
+      end
   end
+
 
 end
 
@@ -143,7 +151,7 @@ def print_footer(names)
 end
 
 puts
-students = input_students
-prints(students)
-print_footer(students)
+#students = input_students
+prints(students_old)
+print_footer(students_old)
 puts
