@@ -121,22 +121,12 @@ def prints(names)
   puts "The Students of Awesomeness Academy"
   puts "-" * ($longest_string.to_i+13)
 
-  cohort = names.map { |x| x[:cohort] }
-  puts cohort.uniq
-
   names.each.with_index(1) do |name, index|
-    cohort.each do |month|
-      month_to_check = month
-      if month_to_check == name[:cohort]
-        section_1 = "#{name[:name]} (#{name[:cohort].capitalize} cohort)"
-        section_2 = "Height: #{name[:height]}cm, Weight: #{name[:weight]}kgs"
-        section_3 = "Born: #{name[:country]} // Hobby: #{name[:hobby]}"
-
-        puts "#{index}.".center(3) + " " + section_1.center($length_1st_section.to_i) + " // " + section_2.center($length_3rd_section.to_i) + " // " + section_3.center($length_3rd_section.to_i)
-      end
-      end
+      section_1 = "#{name[:name]} (#{name[:cohort].capitalize} cohort)"
+      section_2 = "Height: #{name[:height]}cm, Weight: #{name[:weight]}kgs"
+      section_3 = "Born: #{name[:country]} // Hobby: #{name[:hobby]}"
+      puts "#{index}.".center(3) + " " + section_1.center($length_1st_section.to_i) + " // " + section_2.center($length_3rd_section.to_i) + " // " + section_3.center($length_3rd_section.to_i)
   end
-
 
 end
 
