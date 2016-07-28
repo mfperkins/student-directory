@@ -1,17 +1,3 @@
-students_old = [
-  {name: "Dr. Hannibal Lecter", cohort: :november, country: :USA, hobby: "Eating", height: 180, weight: 90},
-  {name: "Darth Vader", cohort: :august, country: :Empire, hobby: "Light Sabering", height: 190, weight: 92},
-  {name: "Nurse Ratched", cohort: :january, country: :USA, hobby: "Nursing", height: 157, weight: 56},
-  {name: "Michael Corleone", cohort: :november, country: :NYC, hobby: "Pizza making", height: 190, weight: 120},
-  {name: "Alex DeLarge", cohort: :november, country: :USA, hobby: "Cards", height: 182, weight: 87},
-  {name: "The Wicked Witch of the West", cohort: :january, country: :Oz, hobby: "Cackling", height: 165, weight: 64},
-  {name: "Terminator", cohort: :november, country: :Skynet, hobby: "I'll be back", height: 201, weight: 110},
-  {name: "Freddy Krueger", cohort: :september, country: :USA, hobby: "Slashing", height: 193, weight: 96},
-  {name: "The Joker", cohort: :november, country: :Gotham, hobby: "Destroying", height: 178, weight: 76},
-  {name: "Joffrey Baratheon", cohort: :september, country: :Westeros, hobby: "Screeching", height: 136, weight: 52},
-  {name: "Norman Bates", cohort: :august, country: :England, hobby: "Chess", height: 156, weight: 60}
-]
-
 @students = []
 
 def try_load_students
@@ -26,6 +12,12 @@ def try_load_students
   end
 end
 
+try_load_students
+
+def push_to_arr data
+  data.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
+end
+
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
@@ -35,7 +27,6 @@ def load_students(filename = "students.csv")
   file.close
 end
 
-try_load_students
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
@@ -59,7 +50,7 @@ def save_students
   file.close
 end
 
-def process(selection)
+def options(selection)
   case selection
   when "1"
     @students = input_students
@@ -83,7 +74,7 @@ def interactive_menu
 
   loop do
     print_menu
-    process(STDIN.gets.chomp)
+    options(STDIN.gets.chomp)
   end
 end
 
@@ -121,37 +112,8 @@ def input_students
     end
     puts "Enter another student's name or hit ENTER to finish"
     name = STDIN.gets.chomp.capitalize
-
   end
   @students
-end
-
-def print_if_letter(names)
-  puts "This option allows you to print students whose name begins with a specific letter"
-  puts "What letter would you like to select?"
-  answer = gets.chomp.upcase
-  puts "Ok, this is what I've got ..."
-  names.each.with_index(1) do |name, index|
-    if name[:name][0] == answer
-      puts "#{index}. #{name[:name]} (#{name[:cohort].capitalize} cohort)"
-    end
-  end
-end
-
-def print_while(names)
-  count = 0
-  while count != names.count
-    puts "#{names[count][:name]} (#{names[count][:cohort].capitalize} cohort)"
-    count += 1
-  end
-end
-
-def print_length(names)
-  names.each.with_index(1) do |name, index|
-    if name[:name].length > 12
-      puts "#{index}. #{name[:name]} (#{name[:cohort].capitalize} cohort ) (Height: #{name[:name]} ) (Weight: #{name[:weight]} )(Born: #{name[:country]} ) (Hobby: #{name[:hobby]})"
-    end
-  end
 end
 
 def find_lengths names
@@ -181,9 +143,7 @@ def find_lengths names
     if section_3.length > $length_3rd_section
       $length_3rd_section = section_3.length
     end
-
   end
-
 end
 
 
@@ -200,7 +160,6 @@ def print_student_list(names)
       section_3 = "Born: #{name[:country]} // Hobby: #{name[:hobby]}"
       puts "#{index}.".center(3) + " " + section_1.center($length_1st_section.to_i) + " // " + section_2.center($length_3rd_section.to_i) + " // " + section_3.center($length_3rd_section.to_i)
   end
-
 end
 
 def print_footer(names)
