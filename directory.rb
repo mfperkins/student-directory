@@ -12,10 +12,37 @@ students_old = [
   {name: "Norman Bates", cohort: :august, country: :England, hobby: "Chess", height: 156, weight: 60}
 ]
 
-def input_students
-  puts "Please enter names of the students."
+$students = []
 
-  students = []
+def interactive_menu
+  puts "What would you like to do?"
+  puts "Your options are:"
+  puts
+
+  loop do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+
+    selection = gets.chomp
+
+    case selection
+    when "1"
+      $students = input_students
+    when "2"
+      prints($students)
+      print_footer($students)
+    when "9"
+      exit
+    else
+      puts "I don't know what that means. Try again."
+    end
+  end
+end
+
+def input_students
+  puts "Please enter name of the student."
+
   name = gets.chomp.capitalize
 
   while !name.empty? do
@@ -38,19 +65,18 @@ def input_students
     puts "And finally, how much does #{name} weigh in kgs?"
     weight = gets.chomp
 
-    students.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
+    $students.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
 
-    if students.count > 1
-      puts "Now we have #{students.count} students."
+    if $students.count > 1
+      puts "Now we have #{$students.count} students."
     else
-      puts "Now we have #{students.count} student."
+      puts "Now we have #{$students.count} student."
     end
     puts "Enter another student's name or hit ENTER to finish"
     name = gets.chomp.capitalize
 
   end
-  puts students
-  students
+  $students
 end
 
 def print_if_letter(names)
@@ -141,7 +167,5 @@ def print_footer(names)
 end
 
 puts
-#students = input_students
-prints(students_old)
-print_footer(students_old)
+interactive_menu
 puts
