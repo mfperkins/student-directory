@@ -12,7 +12,31 @@ students_old = [
   {name: "Norman Bates", cohort: :august, country: :England, hobby: "Chess", height: 156, weight: 60}
 ]
 
-$students = []
+@students = []
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_student_list(@students)
+  print_footer(@students)
+end
+
+def process(selection)
+  case selection
+  when "1"
+    @students = input_students
+  when "2"
+    show_students
+  when "9"
+    exit
+  else
+    puts "I don't know what that means. Try again."
+  end
+end
 
 def interactive_menu
   puts "What would you like to do?"
@@ -20,23 +44,8 @@ def interactive_menu
   puts
 
   loop do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-
-    selection = gets.chomp
-
-    case selection
-    when "1"
-      $students = input_students
-    when "2"
-      prints($students)
-      print_footer($students)
-    when "9"
-      exit
-    else
-      puts "I don't know what that means. Try again."
-    end
+    print_menu
+    process(gets.chomp)
   end
 end
 
@@ -65,18 +74,18 @@ def input_students
     puts "And finally, how much does #{name} weigh in kgs?"
     weight = gets.chomp
 
-    $students.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
+    @students.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
 
-    if $students.count > 1
-      puts "Now we have #{$students.count} students."
+    if @students.count > 1
+      puts "Now we have #{@students.count} students."
     else
-      puts "Now we have #{$students.count} student."
+      puts "Now we have #{@students.count} student."
     end
     puts "Enter another student's name or hit ENTER to finish"
     name = gets.chomp.capitalize
 
   end
-  $students
+  @students
 end
 
 def print_if_letter(names)
@@ -140,7 +149,7 @@ def find_lengths names
 end
 
 
-def prints(names)
+def print_student_list(names)
 
   find_lengths(names)
 
