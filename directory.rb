@@ -14,6 +14,28 @@ students_old = [
 
 @students = []
 
+def try_load_students
+  filename = ARGV.first #1st argument from the command line
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}."
+  else
+    puts "Sorry, #{filename}, doesn't exist"
+    exit
+  end
+end
+
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort, country, hobby, height, weight = line.chomp.split(",")
+    @students.push({name: name, cohort: cohort.to_sym, country: country, hobby: hobby, height: height, weight: weight})
+  end
+  file.close
+end
+
+try_load_students
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
@@ -33,15 +55,6 @@ def save_students
     student_data = [name[:name], name[:cohort], name[:country], name[:hobby], name[:height], name[:weight]]
     csv_line = student_data.join(",")
     file.puts csv_line
-  end
-  file.close
-end
-
-def load_students
-  file = File.open("students.csv", "r")
-  file.readlines.each do |line|
-    name, cohort, country, hobby, height, weight = line.chomp.split(",")
-    @students.push({name: name, cohort: cohort.to_sym, country: country, hobby: hobby, height: height, weight: weight})
   end
   file.close
 end
@@ -70,34 +83,34 @@ def interactive_menu
 
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
 def input_students
   puts "Please enter name of the student."
 
-  name = gets.chomp.capitalize
+  name = STDIN.gets.chomp.capitalize
 
   while !name.empty? do
 
     puts "What cohort is #{name} in?"
-    cohort = gets.chomp.capitalize.to_sym
+    cohort = STDIN.gets.chomp.capitalize.to_sym
     if cohort.empty? == true
       cohort = :november
     end
 
     puts "What country is #{name} from?"
-    country = gets.chomp.capitalize
+    country = STDIN.gets.chomp.capitalize
 
     puts "What is #{name}'s favourite hobby?"
-    hobby = gets.chomp
+    hobby = STDIN.gets.chomp
 
     puts "What tall is #{name} in cm?"
-    height = gets.chomp
+    height = STDIN.gets.chomp
 
     puts "And finally, how much does #{name} weigh in kgs?"
-    weight = gets.chomp
+    weight = STDIN.gets.chomp
 
     @students.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
 
@@ -107,7 +120,7 @@ def input_students
       puts "Now we have #{@students.count} student."
     end
     puts "Enter another student's name or hit ENTER to finish"
-    name = gets.chomp.capitalize
+    name = STDIN.gets.chomp.capitalize
 
   end
   @students
