@@ -1,13 +1,31 @@
 @students = []
+@filename = ''
+
+def load_students
+  if File.exists?(@filename)
+    file = File.open(@filename, "r")
+    file.readlines.each do |line|
+      name, cohort, country, hobby, height, weight = line.chomp.split(",")
+      @students.push({name: name, cohort: cohort.to_sym, country: country, hobby: hobby, height: height, weight: weight})
+    end
+    file.close
+  else
+    puts "No student list found"
+  end
+end
 
 def try_load_students
-  filename = ARGV.first #1st argument from the command line
-  return if filename.nil?
-  if File.exists?(filename)
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}."
+  @filename = ARGV.first #1st argument from the command line
+  if @filename.nil?
+    @filename = 'students.csv'
+    load_students
+    puts "Loaded #{@students.count} from #{@filename}."
+  elsif
+    File.exists?(@filename)
+    load_students
+    puts "Loaded #{students.count} from #{@filename}."
   else
-    puts "Sorry, #{filename}, doesn't exist"
+    puts "Sorry, #{@filename}, doesn't exist"
     exit
   end
 end
@@ -18,14 +36,7 @@ def push_to_arr data
   data.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort, country, hobby, height, weight = line.chomp.split(",")
-    @students.push({name: name, cohort: cohort.to_sym, country: country, hobby: hobby, height: height, weight: weight})
-  end
-  file.close
-end
+
 
 def print_menu
   puts "1. Input the students"
@@ -42,18 +53,22 @@ end
 
 def save_students
   file = File.open("students.csv", "w")
+  @filename = file
   @students.each do |name|
     student_data = [name[:name], name[:cohort], name[:country], name[:hobby], name[:height], name[:weight]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
+
 end
 
 def options(selection)
   case selection
   when "1"
+    puts "Ok, let's get some students"
     @students = input_students
+
   when "2"
     show_students
   when "3"
