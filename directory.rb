@@ -41,12 +41,11 @@ def load_files(input)
   file = File.open(input, "r")
   file.readlines.each do |line|
     name, cohort, country, hobby, height, weight = line.chomp.split(",")
-    @students.push({name: name, cohort: cohort.to_sym, country: country, hobby: hobby, height: height, weight: weight})
+    push_to_arr(name, cohort, country, hobby, height, weight)
   end
   file.close
   end
 end
-
 
 def try_load_students
   @filename = ARGV.first #1st argument from the command line
@@ -65,8 +64,8 @@ end
 
 try_load_students
 
-def push_to_arr data
-  data.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
+def push_to_arr(name, cohort, country, hobby, height, weight)
+  @students.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
 end
 
 def print_menu
@@ -161,7 +160,7 @@ def input_students
     puts "And finally, how much does #{name} weigh in kgs?"
     weight = STDIN.gets.chomp
 
-    @students.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
+    push_to_arr(name, cohort, country, hobby, height, weight)
 
     if @students.count > 1
       puts "Now we have #{@students.count} students."
