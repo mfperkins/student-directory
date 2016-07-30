@@ -2,28 +2,61 @@
 @filename = ''
 
 def load_students
-  if File.exists?(@filename)
-    file = File.open(@filename, "r")
-    file.readlines.each do |line|
-      name, cohort, country, hobby, height, weight = line.chomp.split(",")
-      @students.push({name: name, cohort: cohort.to_sym, country: country, hobby: hobby, height: height, weight: weight})
+  if File.exists?(@filename.to_s) == false
+    localFiles = Dir.glob("*.csv")
+    if localFiles.length != 0
+      puts
+      puts "To load a list of students from a file,"
+      puts "choose one of the options below."
+      puts "Otherwise, press ENTER to continue."
+      puts
+      puts "Available files include:"
+      puts localFiles
+      puts
+      answer = gets.chomp
+      if answer.include?(".csv")
+        load_files(answer)
+        @filename = answer
+      elsif answer.include?(".csv") == false
+        load_files(answer + ".csv")
+        @filename = (answer + ".csv")
+      elsif answer == nil
+        @filename = "students.csv"
+      else
+        puts "Sorry, I couldn't find that file"
+      end
+    else
+      puts "Sorry, I didn't find any files to load"
+      @filename = "students.csv"
     end
-    file.close
   else
-    puts "No student list found"
+    if File.exists?(@filename)
+      load_files(@filename)
+    end
   end
 end
+
+def load_files(input)
+  if File.exists?(input)
+  file = File.open(input, "r")
+  file.readlines.each do |line|
+    name, cohort, country, hobby, height, weight = line.chomp.split(",")
+    @students.push({name: name, cohort: cohort.to_sym, country: country, hobby: hobby, height: height, weight: weight})
+  end
+  file.close
+  end
+end
+
 
 def try_load_students
   @filename = ARGV.first #1st argument from the command line
   if @filename.nil?
-    @filename = 'students.csv'
     load_students
-    puts "Loaded #{@students.count} from #{@filename}."
+    puts "Loaded #{@students.count} students from #{@filename}."
   elsif
     File.exists?(@filename)
     load_students
-    puts "Loaded #{students.count} from #{@filename}."
+    puts "Loaded #{@students.count} students from #{@filename}."
   else
     puts "Sorry, #{@filename}, doesn't exist"
     exit
@@ -36,13 +69,11 @@ def push_to_arr data
   data.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
 end
 
-
-
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a file"
+  puts "4. Load the list from a file"
   puts "9. Exit"
 end
 
@@ -52,7 +83,19 @@ def show_students
 end
 
 def save_students
-  file = File.open("students.csv", "w")
+
+  puts "What file would you like to save it to?"
+  puts "Options include:"
+  localFiles = Dir.glob("*.csv")
+  puts localFiles
+  answer = gets.chomp
+  if answer.include?(".csv")
+    file = File.open(answer, "w")
+  elsif answer.include?(".csv") == false
+    file = File.open(answer + ".csv", "w")
+  else
+    file = File.open("students.csv", "w")
+  end
   @filename = file
   @students.each do |name|
     student_data = [name[:name], name[:cohort], name[:country], name[:hobby], name[:height], name[:weight]]
