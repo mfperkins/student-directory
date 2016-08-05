@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 @filename = ''
 
@@ -42,13 +43,11 @@ end
 
 def load_files(input)
   if File.exists?(input)
-  file = File.open(input, "r") do |data|
-    data.readlines.each do |line|
-      name, cohort, country, hobby, height, weight = line.chomp.split(",")
+    CSV.foreach(input) do |line|
+      name, cohort, country, hobby, height, weight = line
       push_to_arr(name, cohort, country, hobby, height, weight)
     end
   end
-end
 end
 
 def try_load_students
@@ -67,8 +66,6 @@ def try_load_students
 end
 
 try_load_students
-
-
 
 def print_menu
   puts "1. Input the students"
@@ -162,27 +159,27 @@ def show_students
 end
 
 def save_students
-
   puts "What file would you like to save it to?"
   puts "Options include:"
   localFiles = Dir.glob("*.csv")
   puts localFiles
   answer = gets.chomp
   if answer.include?(".csv")
-    file = File.open(answer, "w")
+    save_to_file(answer)
   elsif answer.include?(".csv") == false
-    file = File.open(answer + ".csv", "w")
+    save_to_file(answer + ".csv")
   else
-    file = File.open("students.csv", "w")
+    save_to_file("students.csv")
   end
-  @filename = file
-  @students.each do |name|
-    student_data = [name[:name], name[:cohort], name[:country], name[:hobby], name[:height], name[:weight]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
+end
 
+def save_to_file(file)
+  CSV.open(file, "w") do |csv_file|
+    @students.each do |name|
+      student_data = [name[:name], name[:cohort], name[:country], name[:hobby], name[:height], name[:weight]]
+      csv_file << student_data
+    end
+  end
 end
 
 def find_lengths names
