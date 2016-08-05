@@ -36,15 +36,19 @@ def load_students
   end
 end
 
+def push_to_arr(name, cohort, country, hobby, height, weight)
+  @students.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
+end
+
 def load_files(input)
   if File.exists?(input)
-  file = File.open(input, "r")
-  file.readlines.each do |line|
-    name, cohort, country, hobby, height, weight = line.chomp.split(",")
-    push_to_arr(name, cohort, country, hobby, height, weight)
+  file = File.open(input, "r") do |data|
+    data.readlines.each do |line|
+      name, cohort, country, hobby, height, weight = line.chomp.split(",")
+      push_to_arr(name, cohort, country, hobby, height, weight)
+    end
   end
-  file.close
-  end
+end
 end
 
 def try_load_students
@@ -64,9 +68,7 @@ end
 
 try_load_students
 
-def push_to_arr(name, cohort, country, hobby, height, weight)
-  @students.push({name: name, cohort: cohort, country: country, hobby: hobby, height: height, weight: weight})
-end
+
 
 def print_menu
   puts "1. Input the students"
@@ -135,7 +137,7 @@ def input_students
     puts "What is #{name}'s favourite hobby?"
     hobby = STDIN.gets.chomp
 
-    puts "What tall is #{name} in cm?"
+    puts "How tall is #{name} in cm?"
     height = STDIN.gets.chomp
 
     puts "And finally, how much does #{name} weigh in kgs?"
