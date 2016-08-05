@@ -214,17 +214,20 @@ end
 
 
 def print_student_list(names)
+  if @students.length > 0
+    find_lengths(names)
 
-  find_lengths(names)
+    puts "The Students of Awesomeness Academy"
+    puts "-" * ($longest_string.to_i+13)
 
-  puts "The Students of Awesomeness Academy"
-  puts "-" * ($longest_string.to_i+13)
-
-  names.each.with_index(1) do |name, index|
+    names.each.with_index(1) do |name, index|
       section_1 = "#{name[:name]} (#{name[:cohort].capitalize} cohort)"
       section_2 = "Height: #{name[:height]}cm, Weight: #{name[:weight]}kgs"
       section_3 = "Born: #{name[:country]} // Hobby: #{name[:hobby]}"
       puts "#{index}.".center(3) + " " + section_1.center($length_1st_section.to_i) + " // " + section_2.center($length_3rd_section.to_i) + " // " + section_3.center($length_3rd_section.to_i)
+    end
+  else
+    puts "Sorry, there aren't any students yet in the Awesomeness Academy."
   end
 end
 
