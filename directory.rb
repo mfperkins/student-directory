@@ -76,51 +76,32 @@ def print_menu
   puts "9. Exit"
 end
 
-def show_students
-  print_student_list(@students)
-  print_footer(@students)
-end
-
-def save_students
-
-  puts "What file would you like to save it to?"
-  puts "Options include:"
-  localFiles = Dir.glob("*.csv")
-  puts localFiles
-  answer = gets.chomp
-  if answer.include?(".csv")
-    file = File.open(answer, "w")
-  elsif answer.include?(".csv") == false
-    file = File.open(answer + ".csv", "w")
-  else
-    file = File.open("students.csv", "w")
-  end
-  @filename = file
-  @students.each do |name|
-    student_data = [name[:name], name[:cohort], name[:country], name[:hobby], name[:height], name[:weight]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
-
-end
-
 def options(selection)
+  puts
   case selection
   when "1"
-    puts "Ok, let's get some students"
+    "Ok, let's get some students"
+    puts
     @students = input_students
-
   when "2"
+    puts "Here's the list of students."
+    puts
     show_students
   when "3"
+    puts "Okay, let's save the students to a list."
+    puts
     save_students
   when "4"
+    puts "Okay, let's load some students."
+    puts
     load_students
   when "9"
+    puts "Goodbye!"
+    puts
     exit
   else
     puts "I don't know what that means. Try again."
+    puts
   end
 end
 
@@ -171,6 +152,35 @@ def input_students
     name = STDIN.gets.chomp.capitalize
   end
   @students
+end
+
+def show_students
+  print_student_list(@students)
+  print_footer(@students)
+end
+
+def save_students
+
+  puts "What file would you like to save it to?"
+  puts "Options include:"
+  localFiles = Dir.glob("*.csv")
+  puts localFiles
+  answer = gets.chomp
+  if answer.include?(".csv")
+    file = File.open(answer, "w")
+  elsif answer.include?(".csv") == false
+    file = File.open(answer + ".csv", "w")
+  else
+    file = File.open("students.csv", "w")
+  end
+  @filename = file
+  @students.each do |name|
+    student_data = [name[:name], name[:cohort], name[:country], name[:hobby], name[:height], name[:weight]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+
 end
 
 def find_lengths names
