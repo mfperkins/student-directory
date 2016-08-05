@@ -220,7 +220,12 @@ def print_student_list(names)
     puts "The Students of Awesomeness Academy"
     puts "-" * ($longest_string.to_i+13)
 
-    names.each.with_index(1) do |name, index|
+    sorted_names = names.sort_by do |name|
+      name[:cohort.to_sym]
+    end
+
+
+    sorted_names.each.with_index(1) do |name, index|
       section_1 = "#{name[:name]} (#{name[:cohort].capitalize} cohort)"
       section_2 = "Height: #{name[:height]}cm, Weight: #{name[:weight]}kgs"
       section_3 = "Born: #{name[:country]} // Hobby: #{name[:hobby]}"
